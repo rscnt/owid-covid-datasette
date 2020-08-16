@@ -36,7 +36,6 @@ jobs:
         curl -L https://fly.io/install.sh | sh
         datasette publish fly owid-covid.db \
           -m metadata.json \
-          -n owid-covid-datasette \
           --install=datasette-vega \
           --install=datasette-jellyfish \
           --install=datasette-graphql \
