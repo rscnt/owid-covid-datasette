@@ -46,4 +46,5 @@ jobs:
           --install='datasette-copyable>=0.2' \
           --version-note=$LATEST_DATASETTE \
           --branch=$LATEST_DATASETTE \
-          --app="owid-covid-datasette"
+          --app="owid-covid-datasette" \
+          --config=fly.toml
