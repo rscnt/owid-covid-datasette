@@ -27,7 +27,7 @@ jobs:
       run: |
         pip install -r requirements.txt
     - name: Build database
-      run: csvs-to-sqlite owid-covid-data/public/data/**/*.csv owid-covid.db
+      run: csvs-to-sqlite owid-covid-data/public/data/*.csv owid-covid-data/public/data/**/*.csv owid-covid.db
     - name: Install fly
       run: |
         curl -L https://fly.io/install.sh | sh
