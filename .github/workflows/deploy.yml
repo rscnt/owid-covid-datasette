@@ -31,10 +31,6 @@ jobs:
     - name: Deploy to fly.io
       env:
         FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-      uses: actions/checkout@v2
-      with:
-        repository: superfly/flyctl-actions@1.1
-        path: data
       run: |-
         export LATEST_DATASETTE=`curl -s "https://api.github.com/repos/simonw/datasette/commits/master" | jq -r .sha`
         curl -L https://fly.io/install.sh | sh
