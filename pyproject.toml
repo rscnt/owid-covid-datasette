@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "datasette-ourworldindata-covid"
+version = "0.1.0"
+description = "A datasette instance for ourworldindata's covid data"
+authors = ["Raul Ascencio <rascencio@protonmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+datasette = "^0.47.3"
+datasette-vega = "^0.6.2"
+csvs-to-sqlite = "^1.1"
+datasette-publish-fly = "^1.0"
+datasette-jellyfish = "^0.3"
+datasette-copyable = "^0.2"
+datasette-graphql = "^0.12.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

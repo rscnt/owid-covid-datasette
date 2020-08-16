@@ -1,0 +1,50 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+  schedule:
+    - cron:  '15 0 * * *'
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out this repo
+      uses: actions/checkout@v2
+    - name: Check out owid/covid-19-data
+      uses: actions/checkout@v2
+      with:
+        repository: owid/covid-19-data
+        path: data
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install Python dependencies
+      run: |
+        pip install -r requirements.txt
+    - name: Build database
+      run: csvs-to-sqlite covid-19-data/public/data/**/*.csv owid-covid.db
+    - name: Deploy to fly.io
+      env:
+        FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      uses: actions/checkout@v2
+      with:
+        repository: superfly/flyctl-actions@1.1
+        path: data
+      run: |-
+        export LATEST_DATASETTE=`curl -s "https://api.github.com/repos/simonw/datasette/commits/master" | jq -r .sha`
+        curl -L https://fly.io/install.sh | sh
+        datasette publish fly owid-covid.db \
+          -m metadata.json \
+          -n owid-covid-datasette \
+          --install=datasette-vega \
+          --install=datasette-jellyfish \
+          --install=datasette-graphql \
+          --install='datasette-copyable>=0.2' \
+          --version-note=$LATEST_DATASETTE \
+          --branch=$LATEST_DATASETTE \
+          --app="owid-covid-datasette"

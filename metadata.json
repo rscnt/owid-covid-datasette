@@ -1,0 +1,8 @@
+{
+    "title": "Datasette interface for Our World in Data covid datasets",
+    "description": "Our complete COVID-19 dataset is a collection of the COVID-19 data maintained by Our World in Data. It is updated daily and includes data on confirmed cases, deaths, and testing, as well as other variables of potential interest.",
+    "license": "ODbL",
+    "license_url": "https://opendatacommons.org/licenses/odbl/",
+    "source": "our world in data github owid/covid-19-data repository",
+    "source_url": "https://github.com/owid/covid-19-data"
+}
