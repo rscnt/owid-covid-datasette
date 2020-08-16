@@ -28,12 +28,14 @@ jobs:
         pip install -r requirements.txt
     - name: Build database
       run: csvs-to-sqlite owid-covid-data/public/data/**/*.csv owid-covid.db
+    - name: Install fly
+      run: |
+        curl -L https://fly.io/install.sh | FLYCTL_INSTALL=/usr/local sh
     - name: Deploy to fly.io
       env:
         FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       run: |-
         export LATEST_DATASETTE=`curl -s "https://api.github.com/repos/simonw/datasette/commits/master" | jq -r .sha`
-        curl -L https://fly.io/install.sh | sh
         datasette publish fly owid-covid.db \
           -m metadata.json \
           --install=datasette-vega \
