@@ -36,6 +36,8 @@ jobs:
         FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       run: |-
         export LATEST_DATASETTE=`curl -s "https://api.github.com/repos/simonw/datasette/commits/master" | jq -r .sha`
+        export FLYCTL_INSTALL="/home/runner/.fly"
+        export PATH="$FLYCTL_INSTALL/bin:$PATH"
         datasette publish fly owid-covid.db \
           -m metadata.json \
           --install=datasette-vega \
